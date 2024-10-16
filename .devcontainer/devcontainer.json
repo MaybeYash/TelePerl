@@ -1,0 +1,11 @@
+{
+  "name": "Llang Telegram",
+  "image": "mcr.microsoft.com/devcontainers/base:debian", 
+  "features": {},
+  "postCreateCommand": "apt-get update && apt-get install -y curl llang", 
+  "customizations": {
+    "vscode": {
+      "extensions": []
+    }
+  }
+}
