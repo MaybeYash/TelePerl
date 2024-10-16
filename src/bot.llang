@@ -1,0 +1,37 @@
+import http
+
+let botToken = "YOUR_BOT_TOKEN_HERE"
+let baseUrl = "https://api.telegram.org/bot" + botToken
+
+function getUpdates(offset) {
+    let url = baseUrl + "/getUpdates?offset=" + offset
+    return http.get(url)
+}
+
+function sendMessage(chatId, text) {
+    let url = baseUrl + "/sendMessage?chat_id=" + chatId + "&text=" + text
+    return http.get(url)
+}
+
+function main() {
+    let offset = 0
+    loop {
+        let response = getUpdates(offset)
+        let updates = response['result']
+        for update in updates {
+            let chatId = update['message']['chat']['id']
+            let text = update['message']['text']
+            
+            # Simple reply logic
+            if text == "/start" {
+                sendMessage(chatId, "Hello! I'm your Llang Bot!")
+            } else {
+                sendMessage(chatId, "You said: " + text)
+            }
+            offset = update['update_id'] + 1
+        }
+        sleep(1000)
+    }
+}
+
+main()
